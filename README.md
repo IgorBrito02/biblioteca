@@ -283,8 +283,8 @@ Exemplo real de registro:
 ## 🧩 Execução do Projeto
 
 ```bash
-# Clone o repositório
-git clone https://github.com/IgorBrito02/biblioteca.git
+# Clone a branch exercicio-parte-2
+git clone --branch exercicio-parte-2 --single-branch https://github.com/IgorBrito02/biblioteca.git
 
 # Acesse o diretório
 cd biblioteca
