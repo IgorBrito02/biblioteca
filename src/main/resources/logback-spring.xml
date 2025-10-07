@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <!-- Diretório onde os logs serão salvos (será criado na raiz do projeto) -->
+    <property name="LOG_PATH" value="logs" />
+
+    <!-- Log padrão no console (saída para o desenvolvedor) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para Arquivo de Erros (Implementa o requisito de logging em arquivo) -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/biblioteca-erros.log</file> <!-- Nome do arquivo de log -->
+        
+        <!-- Define que este appender só captura logs de nível ERROR ou superior -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Rola o arquivo de log diariamente -->
+            <fileNamePattern>${LOG_PATH}/biblioteca-erros-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory> <!-- Mantém logs dos últimos 10 dias -->
+        </rollingPolicy>
+    </appender>
+
+    <!-- Configuração global: nível INFO, envia para Console e para o Arquivo de Erros -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE_ERROR" />
+    </root>
+</configuration>
